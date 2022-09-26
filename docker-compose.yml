@@ -19,7 +19,7 @@ services:
       - /app/node_modules
       - ./server:/app
     environment:
-      - MONGODB_URL=mongodb+srv://sudheer:Pssword123@cluster0.wh9d1.mongodb.net/DB?retryWrites=true&w=majority
+      - mongodb+srv://oralpath:Oralpath123@cluster0.msq551o.mongodb.net/oralpathDB?retryWrites=true&w=majority
       - NODE_ENV=production
       - PORT=4000
     ports:
