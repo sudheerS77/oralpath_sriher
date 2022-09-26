@@ -28,14 +28,14 @@ const PG = () => {
                 </div>
                 <div className="w-full md:w-3/5 md:ml-10 md:ml-0 px-2 md:px-10 py-5 bg-slate-50 flex flex-col gap-2 md:gap-5">
                   <div className="flex flex-col items-start gap-0.2">
-                    <h5 className="text-md md:text-lg font-semibold">
+                    <h5 className="text-md md:text-lg font-bold">
                       {data.name}
                     </h5>
-                    <h6 className="text-md text-blue-400 font-light">
+                    <h6 className="text-md text-blue-400 font-semilight">
                       {data.deg}
                     </h6>
                     <p className="text-md font-thin text-blue-400">
-                      {data.deg}
+                      {data.year}
                     </p>
                   </div>
                   <p className="text-sm md:text-md font-light text-gray-500 w-80 md:w-full">

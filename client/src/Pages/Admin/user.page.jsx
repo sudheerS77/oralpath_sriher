@@ -24,10 +24,10 @@ const UserPage = (props) => {
 
   const cardData = [
     {
-      name: "ACHIEVEMENTS",
+      name: "Users",
       count: users ? users.length : 0,
-      link: "View all achievements",
-      linkUrl: "/admin/achievements",
+      link: "View all users",
+      linkUrl: "/",
       icon: <FaUserTie />,
     },
   ];

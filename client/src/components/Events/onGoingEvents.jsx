@@ -192,7 +192,7 @@ const OnGoingEvents = () => {
               )
           )
         ) : (
-          <div>
+          <div className="w-full h-screen flex items-center justify-center">
             <MoonLoader width={1000} height={1000} />
           </div>
         )}
