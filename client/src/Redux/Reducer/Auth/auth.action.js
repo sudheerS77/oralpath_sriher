@@ -21,7 +21,7 @@ export const signIn = (userData) => async (dispatch) => {
             window.location.href = `${CLIENT_URL}`;
         } 
         if(userRole === "admin") {
-            window.location.href = "/";
+            window.location.href = "/admin";
         }
 
         return dispatch({ type: SIGN_IN , payload:  User.data });
