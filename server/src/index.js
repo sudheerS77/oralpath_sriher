@@ -34,14 +34,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(cors());
 
-
-app.set('trust proxy', 1) // trust first proxy
-app.use(session({
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
-}))
+app.set("trust proxy", 1); // trust first proxy
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
 // app.use(session({
 //   cookie:{
 //       secure: true,
@@ -67,16 +68,15 @@ app.use("/pg", PgStudents);
 app.use("/slider", Slider);
 app.use("/achievements", Achievememts);
 app.use("/user", User);
-app.use("/feedback", Feedback)
+app.use("/feedback", Feedback);
 app.use("/payment", Payment);
 
-
 app.get("/", async (req, res) => {
-  res.status(200).json({ message: "Welcome"})
-}) 
+  res.status(200).json({ message: "Welcome" });
+});
 
 app.listen(4000, () =>
-    ConnectDB()
+  ConnectDB()
     .then(() => console.log("Server is running \n DB connected"))
     .catch(() => console.log("Server is running DB didnt connected"))
 );
