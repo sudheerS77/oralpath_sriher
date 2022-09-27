@@ -70,22 +70,22 @@ const SmNavBar = () => {
               >
                 <Link to={"/events"}>Events</Link>
               </li>
-              <li
+              {/* <li
                 className={
                   type === "cde" &&
                   "bg-slate-900 text-center w-full border border-grey-50 shadow-xl py-1 px-2 rounded-sm text-blue-50 transition duration-700 ease-in-out delay-150"
                 }
               >
                 <Link to={"/cde"}>CDE</Link>
-              </li>
-              <li
+              </li> */}
+              {/* <li
                 className={
                   type === "achivements" &&
                   "bg-slate-900 text-center w-full border border-grey-50 shadow-xl py-1 px-2 rounded-sm text-blue-50 transition duration-700 ease-in-out delay-150"
                 }
               >
                 <Link to={"/achivements"}>Achivements</Link>
-              </li>
+              </li> */}
               <li
                 className={
                   type === "faculty" &&
@@ -110,22 +110,22 @@ const SmNavBar = () => {
               >
                 <Link to={"/pg"}>PG</Link>
               </li>
-              <li
+              {/* <li
                 className={
                   type === "gallery" &&
                   "bg-slate-900 text-center w-full border border-grey-50 shadow-xl py-1 px-2 rounded-sm text-blue-50 transition duration-700 ease-in-out delay-150"
                 }
               >
                 <Link to={"/gallery"}>Gallery</Link>
-              </li>
-              <li
+              </li> */}
+              {/* <li
                 className={
                   type === "projects" &&
                   "bg-slate-900 text-center w-full border border-grey-50 shadow-xl py-1 px-2 rounded-sm text-blue-50 transition duration-700 ease-in-out delay-150"
                 }
               >
                 <Link to={"/projects"}>Projects</Link>
-              </li>
+              </li> */}
               {reduxState?.user ? (
                 <div className="flex flex-col items-start justify-center gap-4 block px-0 py-2 hover:bg-gray-100 font-bold w-full border">
                   <li

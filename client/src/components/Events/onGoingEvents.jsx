@@ -94,7 +94,7 @@ const OnGoingEvents = () => {
     const rp = razorPay.open();
     return rp;
   };
-  const initPayment = (data) => {
+  const initPayment = async (data) => {
     console.log(data);
     const rzkey = axios.get(`${API_URL}/payment/getRZPKEY`);
     const options = {
@@ -127,14 +127,15 @@ const OnGoingEvents = () => {
       const orderUrl = `${API_URL}/payment/orders`;
       const { data } = await axios.post(orderUrl, { amount: 1 });
       console.log(data);
-      initPayment(data.data);
+      await initPayment(data.data);
+      return true;
     } catch (error) {
       console.log(error);
+      return false;
     }
   };
   console.log(eventData);
-  const eventRegister = ({ data }) => {
-    console.log(data);
+  const eventRegister = async ({ data }) => {
     const eventRegData = {
       event_id: data._id,
       user_id: userState?.user?._id,
@@ -152,20 +153,18 @@ const OnGoingEvents = () => {
       event_end_data: data.conferenceEndDate,
       event_link: data.conferenceURL,
     };
-    console.log(eventRegData);
 
     if (localStorage.SRCUser) {
       if (data.conferenceType === "free") {
-        dispatch(eventRegisteration(eventRegData));
+        // dispatch(eventRegisteration(eventRegData));
       } else {
-        // if (launchRazorpyay()) {
-        // }
-        // eventRegData.paymentStatus = true;
-        // if (payNow()) {
-        //   dispatch(eventRegisteration(eventRegData));
-        // } else {
-        //   alert("Payment Failed");
-        // }
+        const pay = await handlePayment();
+        if (pay === true) {
+          eventRegData.paymentStatus = true;
+          dispatch(eventRegisteration(eventRegData));
+        } else {
+          alert("Cant register, please contact administrator");
+        }
       }
     } else {
       alert("Please login to register for the event");
@@ -237,12 +236,11 @@ const OnGoingEvents = () => {
                       </h4>
                       <button
                         className="bg-green-600 text-gray-50 text-xl font-bold w-full md:w-auto px-4 py-1 rounded-lg"
-                        onClick={handlePayment}
-                        //   () => {
-                        //   // eventRegister({ data });
-                        //   // payNow({ data });
-                        //   paymentHandler();
-                        // }}
+                        onClick={() => {
+                          eventRegister({ data });
+                          // payNow({ data });
+                          // handlePayment
+                        }}
                       >
                         Register
                       </button>

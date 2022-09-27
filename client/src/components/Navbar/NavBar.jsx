@@ -51,10 +51,10 @@ const LgNav = () => {
       name: "Conferences",
       path: "events",
     },
-    {
-      name: "CDE",
-      path: "cde",
-    },
+    // {
+    //   name: "CDE",
+    //   path: "cde",
+    // },
   ];
 
   const navbarList = [
@@ -62,18 +62,18 @@ const LgNav = () => {
       name: "Home",
       path: "home",
     },
-    {
-      name: "Achivements",
-      path: "achivements",
-    },
-    {
-      name: "Gallery",
-      path: "gallery",
-    },
-    {
-      name: "Projects",
-      path: "projects",
-    },
+    // {
+    //   name: "Achivements",
+    //   path: "achivements",
+    // },
+    // {
+    //   name: "Gallery",
+    //   path: "gallery",
+    // },
+    // {
+    //   name: "Projects",
+    //   path: "projects",
+    // },
   ];
 
   return (
