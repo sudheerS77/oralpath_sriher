@@ -151,8 +151,8 @@ export const eventRegisteration = (eventRegData) => async (dispatch) => {
 export const createPayment = () => async (dispatch) => {
     try {
         const order = await axios({
-          method: "POST",
-          url: `${API_URL}/payment/new`,
+          method: "GET",
+          url: `${API_URL}/payment/order`,
         }).then((response) => {
           return response;
         });

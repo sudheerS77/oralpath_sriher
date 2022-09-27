@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import MoonLoader from "react-spinners/MoonLoader"
-//import Razorpay from "razorpay";
+import { API_URL } from "../../key";
+import axios from "axios";
 
 //Redux action
 import {
@@ -20,44 +21,59 @@ const OnGoingEvents = () => {
   }, [reduxState?.events]);
 
   const dispatch = useDispatch();
-  // const payNow = async (e) => {
+  // const payNow = async ({ event_Data }) => {
   //   try {
-  //     const  payments = await dispatch(createPayment(200));
+  //     // const payments = dispatch(createPayment(200));
+  //     const payments = await axios.get(`${API_URL}/payment/order`);
+  //     console.log(payments);
+  //     const { data } = payments;
   //     const options = {
-  //       "key": "rzp_test_f7AzNO9BLJVfUI", // Enter the Key ID generated from the Dashboard
-  //       "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-  //       "currency": "INR",
-  //       "name": "SRC",
-  //       "description": "Test Transaction",
-  //       "image": "https://example.com/your_logo",
-  //       "order_id": "order_9A33XWu170gUtm", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-  //       "handler": function (response){
-  //           alert(response.razorpay_payment_id);
-  //           alert(response.razorpay_order_id);
-  //           alert(response.razorpay_signature)
+  //       key: "rzp_live_gN88e4C0ndRhfx", // Enter the Key ID generated from the Dashboard
+  //       // amount: "", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+  //       currency: "INR",
+  //       name: "oralpath",
+  //       description: "Event Payment",
+  //       image: "https://example.com/your_logo",
+  //       order_id: data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+  //       handler: async (response) => {
+  //         try {
+  //           alert("HANDLER");
+  //           console.log({ response });
+  //           const paymentId = response.razorpay_payment_id;
+  //           console.log({ paymentId });
+  //           const url = `${API_URL}/payment/capture/${paymentId}`;
+  //           const captureResponse = await axios.post(url, {});
+  //           console.log(captureResponse.data);
+  //         } catch (err) {
+  //           console.log(err);
+  //         }
   //       },
-  //       "prefill": {
-  //           "name": "Gaurav Kumar",
-  //           "email": "gaurav.kumar@example.com",
-  //           "contact": "9999999999"
+  //       prefill: {
+  //         name: "Gaurav Kumar",
+  //         email: "gaurav.kumar@example.com",
+  //         contact: "9090909090",
   //       },
-  //       "notes": {
-  //           "address": "Razorpay Corporate Office"
+  //       notes: {
+  //         address: "Razorpay Corporate Office",
   //       },
-  //       "theme": {
-  //           "color": "#3399cc"
-  //       }
+  //       theme: {
+  //         color: "#3399cc",
+  //       },
   //     };
-  //     const razorpay = new Razorpay(options);
-  //       razorpay.open();
-  //       e.preventDefault();
-
+  //     console.log("PAYMENT  STARTING");
+  //     const razorpay = new window.Razorpay(options);
+  //     console.log("PAYMENT  STARTED");
+  //     razorpay.open();
+  //     console.log("PAYMENT  COMPLETED");
+  //     // eventRegister({ event_Data });
+  //     // e.preventDefault();
   //   } catch (error) {
-  //     alert(error)
+  //     console.log(error);
+  //     console.log(error.message);
+  //     alert(error);
   //   }
-
-  // }
-  const launchRazorpyay = () => {
+  // };
+  const launchRazorpyay = async () => {
     let options = {
       key: "rzp_test_f7AzNO9BLJVfUI",
       amount: 500 * 100,
@@ -78,7 +94,44 @@ const OnGoingEvents = () => {
     const rp = razorPay.open();
     return rp;
   };
-  
+  const initPayment = (data) => {
+    console.log(data);
+    const rzkey = axios.get(`${API_URL}/payment/getRZPKEY`);
+    const options = {
+      key: rzkey,
+      amount: data.amount,
+      currency: "INR",
+      name: "ORALPATH",
+      description: "Test Transaction",
+      image: "",
+      order_id: data.id,
+      // callback_url: `${API_URL}/payment/verify`,
+      handler: async (response) => {
+        try {
+          const verifyUrl = `${API_URL}/payment/verify`;
+          const { data } = await axios.post(verifyUrl, response);
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+  const handlePayment = async () => {
+    try {
+      const orderUrl = `${API_URL}/payment/orders`;
+      const { data } = await axios.post(orderUrl, { amount: 1 });
+      console.log(data);
+      initPayment(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   console.log(eventData);
   const eventRegister = ({ data }) => {
     console.log(data);
@@ -108,7 +161,11 @@ const OnGoingEvents = () => {
         // if (launchRazorpyay()) {
         // }
         // eventRegData.paymentStatus = true;
-        dispatch(eventRegisteration(eventRegData));
+        // if (payNow()) {
+        //   dispatch(eventRegisteration(eventRegData));
+        // } else {
+        //   alert("Payment Failed");
+        // }
       }
     } else {
       alert("Please login to register for the event");
@@ -180,9 +237,12 @@ const OnGoingEvents = () => {
                       </h4>
                       <button
                         className="bg-green-600 text-gray-50 text-xl font-bold w-full md:w-auto px-4 py-1 rounded-lg"
-                        onClick={() => {
-                          eventRegister({ data });
-                        }}
+                        onClick={handlePayment}
+                        //   () => {
+                        //   // eventRegister({ data });
+                        //   // payNow({ data });
+                        //   paymentHandler();
+                        // }}
                       >
                         Register
                       </button>
