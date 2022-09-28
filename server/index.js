@@ -75,7 +75,7 @@ app.get("/", async (req, res) => {
   res.status(200).json({ message: "Welcome" });
 });
 
-app.listen(8080, () =>
+app.listen(4000, () =>
   ConnectDB()
     .then(() => console.log("Server is running \n DB connected"))
     .catch(() => console.log("Server is running DB didnt connected"))
