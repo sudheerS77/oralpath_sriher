@@ -58,18 +58,18 @@ app.use(
 routeConfig(passport);
 
 //Application Routes
-app.use("/auth", Auth);
-app.use("/projects", Projects);
-app.use("/photos", photos);
-app.use("/events", Events);
-app.use("/brochure", Brochure);
-app.use("/faculty", Faculty);
-app.use("/pg", PgStudents);
-app.use("/slider", Slider);
-app.use("/achievements", Achievememts);
-app.use("/user", User);
-app.use("/feedback", Feedback);
-app.use("/payment", Payment);
+app.use("/api/auth", Auth);
+app.use("/api/projects", Projects);
+app.use("/api/photos", photos);
+app.use("/api/events", Events);
+app.use("/api/brochure", Brochure);
+app.use("/api/faculty", Faculty);
+app.use("api//pg", PgStudents);
+app.use("/api/slider", Slider);
+app.use("/api/achievements", Achievememts);
+app.use("/api/user", User);
+app.use("/api/feedback", Feedback);
+app.use("/api/payment", Payment);
 
 app.get("/", async (req, res) => {
   res.status(200).json({ message: "Welcome" });
